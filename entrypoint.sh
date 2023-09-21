@@ -11,7 +11,23 @@ source ./install/setup.bash
 
 # Enable Arduino_uno device if file exist
 FILE=/dev/Arduino_UNO
-if test -f "$FILE"; then
+if stat "$FILE" &> /dev/null; then
+    echo "$FILE exists."
+    sudo chmod 666 $FILE
+else 
+    echo "Warning: $FILE does not exist."
+fi
+
+FILE=/dev/input/by-id/usb-Microsoft_Controller_3033363030313330363632363334-event-joystick
+if stat "$FILE" &> /dev/null; then
+    echo "$FILE exists."
+    sudo chmod 666 $FILE
+else 
+    echo "Warning: $FILE does not exist."
+fi
+
+FILE=/dev/input/event3
+if stat "$FILE" &> /dev/null; then
     echo "$FILE exists."
     sudo chmod 666 $FILE
 else 

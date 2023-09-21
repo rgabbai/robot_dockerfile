@@ -13,8 +13,15 @@ joy_to_array_topic
 serial
 teleop_twist_joy
 
-Running docker
-==================
-move to my_robot 
+# Running docker
+
+move to my_robot
+
 ./robot_dockerfile/run_docker.bash 
+
+# Inside docker
+launch launch/joy-launch.py
+
+
+
 

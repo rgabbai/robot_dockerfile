@@ -10,6 +10,7 @@ source ./install/setup.bash
 
 
 # Enable Arduino_uno device if file exist
+echo "Checking if Arduino connected and enable R/W"
 FILE=/dev/Arduino_UNO
 if stat "$FILE" &> /dev/null; then
     echo "$FILE exists."
@@ -18,6 +19,7 @@ else
     echo "Warning: $FILE does not exist."
 fi
 
+echo "checking if XBOX connected and enable R/W"
 FILE=/dev/input/by-id/usb-Microsoft_Controller_3033363030313330363632363334-event-joystick
 if stat "$FILE" &> /dev/null; then
     echo "$FILE exists."

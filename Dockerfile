@@ -8,6 +8,12 @@ RUN apt-get update && apt-get install -y  \
     less \
 && rm -rf /var/lib/apt/lists/*
 
+#Sensors - Joystic,...
+RUN apt-get update && apt-get install -y  \ 
+    joystick \  
+    xboxdrv  \  
+&& rm -rf /var/lib/apt/lists/*
+
 # ROS specific install section
 RUN apt-get update && apt-get install -y  \ 
  ros-dev-tools \

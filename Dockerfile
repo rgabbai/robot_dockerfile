@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -y  \
  ros-foxy-ros2-control \
  ros-foxy-ros2-controllers \
  ros-foxy-gazebo-ros2-control \
+ ros-foxy-joy \
 && rm -rf /var/lib/apt/lists/*
 
 

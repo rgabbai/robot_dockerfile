@@ -25,7 +25,16 @@ RUN apt-get update && apt-get install -y  \
  ros-foxy-joy \
 && rm -rf /var/lib/apt/lists/*
 
+#Adding Rust dependecies 
+# Get Ubuntu packages
+RUN apt-get update && apt-get install -y -q \
+    build-essential \
+    curl
 
+#Adding Camera required libs
+RUN apt-get update && apt-get install -y  \
+    libv4l-dev \
+    libssl-dev
 
 
 # Define new user
@@ -49,6 +58,19 @@ RUN apt-get update \
 COPY entrypoint.sh /entrypoint.sh
 COPY bashrc /home/${USERNAME}/.bashrc
 ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
+
+
+# RUST Install
+# Get Rust; NOTE: using sh for better compatibility with other base images
+RUN sudo chmod 777 /home/ros/.bashrc
+
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y 
+
+# Add .cargo/bin to PAT
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Check cargo is visible
+#RUN cargo --help
 
 # no external cmd - just open bash terminal
 CMD ["bash"]

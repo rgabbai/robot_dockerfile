@@ -52,7 +52,30 @@ cd ../serial
 colcon build --symlink-install
 source ./install/setup.bash
 
+# Arduino - diffdrive_arduino
+cd ../diffdrive_arduino
+colcon build --symlink-install
+source ./install/setup.bash
 
+
+# back to root.
 cd ../../
+
+# Temp fix for usb camera file name
+cd /dev
+ln -s video5 video0
+cd -
+
+# Temp fix add required lib - later regenrate image to have it
+sudo apt-get install -y libv4l-dev
+
+# Copy onnx run time to usr/lib
+mv libonnxruntime.so.1.15.1 /usr/lib/.
+
+# Activating detection pipe
+
+#./cam_det_pub_node/det_publisher &
+#ros2 launch poc_2W_Robot launch_robot2.launch.py
+
 echo "Provided arguments $@"
 exec $@

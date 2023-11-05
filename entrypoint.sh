@@ -64,18 +64,28 @@ cd ../../
 # Temp fix for usb camera file name
 cd /dev
 ln -s video5 video0
-cd -
+cd - 
+# PATH: robot_ws
 
-# Temp fix add required lib - later regenrate image to have it
-sudo apt-get install -y libv4l-dev
+if [[ -z "${ROBOT_ON}" ]]; then
+  echo "ROBOT_ON is not set $ROBOT_ON"
+else
+  echo "Activating Robot SW"
 
-# Copy onnx run time to usr/lib
-mv libonnxruntime.so.1.15.1 /usr/lib/.
+    # Activating Robot ROS control
+    #=============================
+    source install/setup.bash
+    ros2 launch poc_2W_Robot launch_robot2.launch.py &
 
-# Activating detection pipe
+    # Activating detection pipe
+    #==============================
+    # Copy onnx run time to usr/lib
+    cp libonnxruntime.so.1.15.1 /usr/lib/.
 
-#./cam_det_pub_node/det_publisher &
-#ros2 launch poc_2W_Robot launch_robot2.launch.py
+    cd ../cam_det_pub_node/ #PATH: repos/cam_det_pub_node
+    ./target/release/det_publisher 0.5 &
+fi
+
 
 echo "Provided arguments $@"
 exec $@

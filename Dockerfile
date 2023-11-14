@@ -37,6 +37,12 @@ RUN apt-get update && apt-get install -y  \
     libssl-dev
 
 
+# Adding MPU650 related
+RUN apt-get update && apt-get install -y  \
+    python3-smbus \
+    i2c-tools
+
+
 # Define new user
 ARG USERNAME=ros
 ARG USER_UID=1000

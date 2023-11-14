@@ -37,29 +37,42 @@ else
 fi
 
 
+# Below seperate compile not required as all compiled by robot_ws above
 # teleop_twist_Joy
-cd src/teleop_twist_joy
-colcon build --symlink-install
-source ./install/setup.bash
+#----------------------------------------------------------------------------------
+#cd src/teleop_twist_joy
+#colcon build --symlink-install
+#source ./install/setup.bash
 
 # joy to array topic node
-cd ../joy_to_array_topic/
-colcon build --symlink-install
-source ./install/setup.bash
+#cd ../joy_to_array_topic/
+#colcon build --symlink-install
+#source ./install/setup.bash
 
 #serial HW interface for Arduino
-cd ../serial
-colcon build --symlink-install
-source ./install/setup.bash
+#cd ../serial
+#colcon build --symlink-install
+#source ./install/setup.bash
 
 # Arduino - diffdrive_arduino
-cd ../diffdrive_arduino
-colcon build --symlink-install
-source ./install/setup.bash
+#cd ../diffdrive_arduino
+#colcon build --symlink-install
+#source ./install/setup.bash
+
+# Build realsense 
+#cd  ../../../librealsense
+#mkdir build
+#cd build
+#cmake ../ -DFORCE_RSUSB_BACKEND=ON -DBUILD_PYTHON_BINDINGS:bool=true -DPYTHON_EXECUTABLE=/usr/bin/python3.8 -DCMAKE_BUILD_TYPE=release -DBUILD_EXAMPLES=true -DBUILD_GRAPHICAL_EXAMPLES=false
+
+# Lets not clean .. to save time sudo make uninstall && make clean && make && sudo make install
+# make && sudo make install
 
 
-# back to root.
-cd ../../
+# back to root. robot_ws
+#cd ../../robot_ws
+#---------------------------------------------------------------------------------
+
 
 # Temp fix for usb camera file name
 cd /dev
@@ -79,11 +92,22 @@ else
 
     # Activating detection pipe
     #==============================
-    # Copy onnx run time to usr/lib
+    # Copy onnx run time to usr/lib from robot_ws/
     cp libonnxruntime.so.1.15.1 /usr/lib/.
 
-    cd ../cam_det_pub_node/ #PATH: repos/cam_det_pub_node
-    ./target/release/det_publisher 0.5 &
+    # Compile:  
+    # Enter /robot_ws/cam_det_pub_node
+    #cd cam_det_pub_node
+    # cargo update -p ort --precise 1.15.1
+    # cargo build --release
+    ## Run scheme at 0.5FPS 
+    ./cam_det_pub_node/target/release/det_publisher 0.5
+
+    # Activate MPU6050
+    #======================
+    ros2 run mpu6050 imu_publisher_node
+
+    cd ../
 fi
 
 

@@ -74,12 +74,14 @@ fi
 #---------------------------------------------------------------------------------
 
 
-# Temp fix for usb camera file name
-cd /dev
-ln -s video5 video0
-cd - 
-# PATH: robot_ws
+# Temp fix for usb camera file name for Asus - removed fixed in ros node instead
+#cd /dev
+#ln -s video5 video0
+#cd -
 
+#----------------
+# PATH: robot_ws
+#----------------
 if [[ -z "${ROBOT_ON}" ]]; then
   echo "ROBOT_ON is not set $ROBOT_ON"
 else

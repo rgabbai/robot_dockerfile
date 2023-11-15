@@ -90,7 +90,12 @@ else
     # Activating Robot ROS control
     #=============================
     source install/setup.bash
-    ros2 launch poc_2W_Robot launch_robot2.launch.py &
+    ros2 launch poc_2W_Robot launch_robot2.launch.py &> /dev/null &
+
+    
+    # Activate MPU6050
+    #======================
+    ros2 run mpu6050 imu_publisher_nod &> /dev/null &
 
     # Activating detection pipe
     #==============================
@@ -102,13 +107,10 @@ else
     #cd cam_det_pub_node
     # cargo update -p ort --precise 1.15.1
     # cargo build --release
+    
     ## Run scheme at 0.5FPS 
-    ../cam_det_pub_node/target/release/det_publisher 0.5
-
-    # Activate MPU6050
-    #======================
-    ros2 run mpu6050 imu_publisher_node
-
+    cd ../cam_det_pub_node
+    ./target/release/det_publisher 0.5 &> /dev/null &
     cd ../
 fi
 

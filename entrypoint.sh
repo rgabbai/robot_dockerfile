@@ -95,7 +95,7 @@ else
     
     # Activate MPU6050
     #======================
-    ros2 run mpu6050 imu_publisher_nod &> /dev/null &
+    ros2 run mpu6050 imu_publisher_node &> /dev/null &
 
     # Activating detection pipe
     #==============================

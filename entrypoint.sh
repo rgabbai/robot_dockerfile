@@ -80,7 +80,7 @@ fi
 #cd -
 
 #----------------
-# PATH: robot_ws
+# PATH: /robot_ws/
 #----------------
 if [[ -z "${ROBOT_ON}" ]]; then
   echo "ROBOT_ON is not set $ROBOT_ON"
@@ -103,7 +103,7 @@ else
     # cargo update -p ort --precise 1.15.1
     # cargo build --release
     ## Run scheme at 0.5FPS 
-    ./cam_det_pub_node/target/release/det_publisher 0.5
+    ../cam_det_pub_node/target/release/det_publisher 0.5
 
     # Activate MPU6050
     #======================

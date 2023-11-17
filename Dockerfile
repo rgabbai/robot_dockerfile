@@ -42,6 +42,9 @@ RUN apt-get update && apt-get install -y  \
     python3-smbus \
     i2c-tools
 
+RUN apt-get update && apt-get install -y  \
+    ros-foxy-imu-filter-madgwick
+    
 
 # Define new user
 ARG USERNAME=ros

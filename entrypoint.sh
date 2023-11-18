@@ -95,11 +95,14 @@ else
     
     # Activate MPU6050
     #======================
+    cd src
+    source install/setup.bash
     ros2 run mpu6050 imu_publisher_node &> /dev/null &
 
     # Activating detection pipe
     #==============================
     # Copy onnx run time to usr/lib from robot_ws/
+    cd ..
     cp libonnxruntime.so.1.15.1 /usr/lib/.
 
     # Compile:  

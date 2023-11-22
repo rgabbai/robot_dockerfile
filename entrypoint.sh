@@ -90,14 +90,18 @@ else
     # Activating Robot ROS control
     #=============================
     source install/setup.bash
-    ros2 launch poc_2W_Robot launch_robot2.launch.py &> /dev/null &
+    ros2 launch poc_2W_Robot launch_robot2.launch.py &
 
     
     # Activate MPU6050
     #======================
     cd src
+    colcon build
     source install/setup.bash
-    ros2 run mpu6050 imu_publisher_node &> /dev/null &
+    ros2 run mpu6050 imu_publisher_node &
+
+    # activate kalman filter
+    ros2 run imu_filter_madgwick imu_filter_madgwick_node   --ros-args -p use_mag:=false -r /imu/data_raw:=/mpu6050/imu/data
 
     # Activating detection pipe
     #==============================
@@ -113,7 +117,7 @@ else
     
     ## Run scheme at 0.5FPS 
     cd ../cam_det_pub_node
-    ./target/release/det_publisher 0.5 &> /dev/null &
+    ./target/release/det_publisher -m low
     cd ../
 fi
 

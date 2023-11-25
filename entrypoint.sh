@@ -87,17 +87,22 @@ if [[ -z "${ROBOT_ON}" ]]; then
 else
   echo "Activating Robot SW"
 
-    # Activating Robot ROS control
-    #=============================
-    source install/setup.bash
-    ros2 launch poc_2W_Robot launch_robot2.launch.py &
 
-    
-    # Activate MPU6050
-    #======================
+    # Compile all sub repos
+    =============================
     cd src
     colcon build
     source install/setup.bash
+
+    # Activating Robot ROS control
+    #=============================
+    cd ..
+    colcon build
+    source install/setup.bash
+    ros2 launch poc_2W_Robot launch_robot2.launch.py &
+    
+    # Activate MPU6050
+    #======================
     ros2 run mpu6050 imu_publisher_node &
 
     # activate kalman filter

@@ -89,7 +89,7 @@ else
 
 
     # Compile all sub repos
-    =============================
+    #=============================
     cd src
     colcon build
     source install/setup.bash

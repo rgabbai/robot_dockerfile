@@ -106,12 +106,13 @@ else
     ros2 run mpu6050 imu_publisher_node &
 
     # activate kalman filter
-    ros2 run imu_filter_madgwick imu_filter_madgwick_node   --ros-args -p use_mag:=false -r /imu/data_raw:=/mpu6050/imu/data
+    ros2 run imu_filter_madgwick imu_filter_madgwick_node   --ros-args -p use_mag:=false -r /imu/data_raw:=/mpu6050/imu/data &
 
     # Activating detection pipe
     #==============================
     # Copy onnx run time to usr/lib from robot_ws/
     cd ..
+    pwd
     cp libonnxruntime.so.1.15.1 /usr/lib/.
 
     # Compile:  
@@ -121,9 +122,11 @@ else
     # cargo build --release
     
     ## Run scheme at 0.5FPS 
-    cd ../cam_det_pub_node
+    echo "activate camera"
+    cd cam_det_pub_node
     ./target/release/det_publisher -m low
-    cd ../
+    cd ..
+    bash
 fi
 
 
